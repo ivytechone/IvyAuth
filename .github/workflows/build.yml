@@ -14,6 +14,10 @@ jobs:
       run: echo BUILDNUM=$GITHUB_REF_NAME.$(TZ=America/Los_Angeles date +%Y%m%d).$GITHUB_RUN_NUMBER >> $GITHUB_ENV
     - name: Show build number
       run: echo "Build Number is ${{ env.BUILDNUM }}"
+    - name: Inject build number into code
+      run: sed -i -E "s/(Version => \").+(\";)/\1$BUILDNUM\2/" ./IvyAuth/AppInfo.cs
+    - name: Test inject build number
+      run: cat ./IvyAuth/AppInfo.cs
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
