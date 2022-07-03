@@ -24,7 +24,7 @@ jobs:
       run: dotnet build -c Release --no-restore
     - name: List output
       run: ls -lR
-    - uses: action/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: build-output
-        path: ./IvyAuth/bin/Release/net6.0/*
+        path: ./IvyAuth/bin/Release/net6.0/
