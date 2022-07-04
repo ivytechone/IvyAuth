@@ -24,6 +24,11 @@ jobs:
       run: dotnet build -c Release --no-restore
     - name: List output
       run: ls -lR
+    - name: Set bin directory
+      run: echo IVYAUTH_BINDIR=$(pwd)/IvyAuth/bin/Release/net6.0 >> $GITHUB_ENV
+    - name: Run JS Tests
+      working-directory: IvyAuthTest
+      run: npm test
     - uses: actions/upload-artifact@v3
       with:
         name: build-output
