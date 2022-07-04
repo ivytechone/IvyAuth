@@ -31,6 +31,12 @@ jobs:
       run: |
         npm install
         npm test
+    - name: Create docker image
+      run: docker build -t ivytechone/ivyauth:latest -t ivytechone/ivyauth:${{ env.BUILDNUM }} .
+    - name: Docker login
+      run: docker login dockerhub.com -u ivytechone -p ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Push docker image
+      run: docker push -a iverytechone/ivyauth
     - uses: actions/upload-artifact@v3
       with:
         name: build-output
