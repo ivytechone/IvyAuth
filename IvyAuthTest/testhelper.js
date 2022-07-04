@@ -72,7 +72,7 @@ function launchServer(settings) {
             console.log(`server stderr: [[${data}]]`);
           });
 
-        setTimeout(() => resolve(true), 20000);
+        setTimeout(() => resolve(true), 10000);
     });
 }
 

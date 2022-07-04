@@ -18,6 +18,7 @@ describe('Ping', function () {
     const res = await testHelper.ping();
     assert.equal(res.status, 200, 'Request has 200 status');
     console.log(res.data);
+    // todo verify build numbers
   });
 });
 
@@ -26,7 +27,7 @@ describe('GenerateToken', function () {
     it('should return valid token', async function () {
       const res = await testHelper.makeRequest(requestBodyValidCreds);
       assert.equal(res.status, 200, 'Request has 200 status');
-      console.log(res.data);
+      // todo verify token
     });
   });
   describe('With invalid credentials', function () {
