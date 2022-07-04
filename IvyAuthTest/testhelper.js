@@ -65,6 +65,13 @@ function launchServer(settings) {
     return new Promise(resolve => {
         serverProcess = spawn(bindir + '/IvyAuth', [], {'cwd': bindir})
 
+        serverProcess.stdout.on('data', (data) => {
+            console.log(`server stdout: [[${data}]]`);
+          });
+        serverProcess.stderr.on('data', (data) => {
+            console.log(`server stderr: [[${data}]]`);
+          });
+
         setTimeout(() => resolve(true), 1500);
     });
 }
