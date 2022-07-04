@@ -28,7 +28,9 @@ jobs:
       run: echo IVYAUTH_BINDIR=$(pwd)/IvyAuth/bin/Release/net6.0 >> $GITHUB_ENV
     - name: Run JS Tests
       working-directory: IvyAuthTest
-      run: npm test
+      run: |
+        npm install
+        npm test
     - uses: actions/upload-artifact@v3
       with:
         name: build-output
