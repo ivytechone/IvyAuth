@@ -1,4 +1,4 @@
-const artifactdir=process.env.ARTIFACT_DIR;
+const bindir=process.env.IVYAUTH_BINDIR;
 const fs = require('fs')
 const axios = require('axios');
 const {spawn} = require('child_process');
@@ -41,28 +41,29 @@ async function makeRequest(requestBody) {
 
 function copySettings(settings) {
     return new Promise(resolve => {
-        if (artifactdir == null || artifactdir.length ==0) {
-            console.log ('CopySettings Error: ARTIFACT_DIR not set.');
+        if (bindir == undefined || bindir.length ==0) {
+            console.log ('CopySettings Error: IVYAUTH_BINDIR not set.');
             resolve(false);
         }
-
-        fs.copyFile(settings, artifactdir + '/appsettings.json', (err) => {
-            if(err)
-            {
-                console.log('CopySettings Error: ', err);
-                resolve(false)
-            }
-            else
-            {
-                resolve(true);
-            }
-        });
+        else {
+            fs.copyFile(settings, bindir + '/appsettings.json', (err) => {
+                if(err)
+                {
+                    console.log('CopySettings Error: ', err);
+                    resolve(false)
+                }
+                else
+                {
+                    resolve(true);
+                }
+            });
+        }
     });
 }
 
 function launchServer(settings) {
     return new Promise(resolve => {
-        serverProcess = spawn(artifactdir + '/IvyAuth', [], {'cwd': artifactdir})
+        serverProcess = spawn(bindir + '/IvyAuth', [], {'cwd': bindir})
 
         setTimeout(() => resolve(true), 350);
     });
