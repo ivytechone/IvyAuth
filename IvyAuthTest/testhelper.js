@@ -65,7 +65,7 @@ function launchServer(settings) {
     return new Promise(resolve => {
         serverProcess = spawn(bindir + '/IvyAuth', [], {'cwd': bindir})
 
-        setTimeout(() => resolve(true), 350);
+        setTimeout(() => resolve(true), 1500);
     });
 }
 
