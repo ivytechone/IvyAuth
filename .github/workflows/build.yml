@@ -32,7 +32,7 @@ jobs:
         npm install
         npm test
     - name: Create docker image
-      run: docker build -t ivytechone/ivyauth:latest -t ivytechone/ivyauth:${{ env.BUILDNUM }} .
+      run: docker build -t ivytechone/ivyauth:${{ env.BUILDNUM }} .
     - name: Docker login
       run: docker login -u ivytechone -p ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Push docker image
