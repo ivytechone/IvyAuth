@@ -1,5 +1,5 @@
 var assert = require('assert');
-var { createDecoder } = requrie('fast-jwt');
+var { createDecoder } = require('fast-jwt');
 var testHelper = require('./testhelper');
 
 testHelper.startServerWithSettings('testtesttings.json');
