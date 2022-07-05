@@ -1,3 +1,4 @@
+using IvyAuth.Interfaces;
 using IvyAuth.Applications;
 
 namespace IvyAuth
