@@ -12,7 +12,7 @@ namespace IvyAuth
 
         public ApplicationManager()
         {
-            ivyAuthApp = new IvyAuthApp();
+            ivyAuthApp = (IApplication)(new IvyAuthApp());
         }
 
         public IApplication IvyAuthApp 
