@@ -12,6 +12,7 @@ namespace IvyAuth.Controllers
 	{
 		private readonly ILogger<GenerateTokenController> _logger;
 		private readonly ICertificateManager _certificateManager;
+		private readonly IApplicationManager _applicationManager;
 		private readonly IIdentityStore _identityStore;
 
 		public GenerateTokenController(ILogger<GenerateTokenController> logger, ICertificateManager certificateManager, IIdentityStore identityStore, IApplicationManager applicationManager)
@@ -19,6 +20,7 @@ namespace IvyAuth.Controllers
 			logger.LogInformation("Initializing TokenController");
 			_logger = logger;
 			_certificateManager = certificateManager;
+			_applicationManager = applicationManager;
 			_identityStore = identityStore;
 		}
 
@@ -44,7 +46,7 @@ namespace IvyAuth.Controllers
 					}
 
 					var cert = _certificateManager.GetCertificateWithPrivateKey();
-					var app = applicationManager.IvyAuthApp;
+					var app = _applicationManager.IvyAuthApp;
 
 					var token = JwtBuilder.Create()
 					  .WithAlgorithm(new RS256Algorithm(cert))
