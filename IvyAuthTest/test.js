@@ -1,4 +1,5 @@
 var assert = require('assert');
+var { createDecoder } = require('fast-jwt');
 var testHelper = require('./testhelper');
 
 testHelper.startServerWithSettings('testtesttings.json');
@@ -27,9 +28,15 @@ describe('GenerateToken', function () {
     it('should return valid token', async function () {
       const res = await testHelper.makeRequest(requestBodyValidCreds);
       assert.equal(res.status, 200, 'Request has 200 status');
-      // todo verify token
+      
+      const decoder = createDecoder();
+      var token = decoder(res.data);
+      assert.equal(token.iss, 'ivytech.one');
+      assert.equal(token.sub, 'c6dfbcdb-25fb-444e-9f22-01911f083779');
+      assert.equal(token.aud, '00000000-0000-0000-0000-000000000001');
     });
   });
+
   describe('With invalid credentials', function () {
     it('should return 401', async function () {
       const res = await testHelper.makeRequest(requestBodyInvlaidCreds);
@@ -38,6 +45,7 @@ describe('GenerateToken', function () {
     });
   });
 });
+
 describe('Stop server', function() {
   it('Server stopped', function () {
     assert.ok(testHelper.stopServer());
