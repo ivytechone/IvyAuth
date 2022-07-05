@@ -3,6 +3,7 @@
     "axios": "^0.27.2",
     "child_process": "^1.0.2",
     "fast-jwt": "^1.6.0",
+    "fs-extra": "^10.1.0",
     "mocha": "^10.0.0"
   },
   "scripts": {
