@@ -8,7 +8,7 @@ const { VerifierAsync } = require('fast-jwt');
 var serverProcess = null
 
 function startServerWithSettings(settings) {
-    const targetDir = './testRun';
+    const targetDir = '/tmp/ivyAuthTestRun';
 
     describe('StartServer', function(){
         it ('Setup test run dir', async function() {
@@ -69,8 +69,6 @@ function copyBins(targetDir) {
             resolve(false);
         }
         else {
-            console.log('binDir:' + bindir);
-            console.log('target' + targetDir);
             fs.copy(bindir, targetDir)
             .then(() => {
                 resolve(true);
@@ -104,7 +102,6 @@ function copySettings(settingsFile, targerDir) {
 
 function launchServer(targetDir) {
     return new Promise(resolve => {
-        console.log('launchserver targetdir:', targetDir);
         serverProcess = spawn(targetDir + '/IvyAuth', [], {'cwd': targetDir})
 
         serverProcess.stdout.on('data', (data) => {
