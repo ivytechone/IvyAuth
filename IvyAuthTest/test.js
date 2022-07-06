@@ -1,5 +1,6 @@
 var assert = require('assert');
 var { createDecoder } = require('fast-jwt');
+var md5 = require('crypto-js/md5');
 var testHelper = require('./testhelper');
 
 testHelper.startServerWithSettings('testtesttings.json');
@@ -43,6 +44,14 @@ describe('GenerateToken', function () {
       console.log('teststatus', res.status);
       assert.equal(res.status, 401, 'Request has 4011 status');
     });
+  });
+});
+
+describe('GetCertificate', function() {
+  it('should return cert', async function () {
+    const res = await testHelper.makeGetCertificateRequest();
+    assert.equal(res.status, 200, 'Request has 200 status');
+    assert.equal(md5(res.data), 'e31b923552ca79a71ca622bf22ecaca1', 'Certificate data is correct');
   });
 });
 
