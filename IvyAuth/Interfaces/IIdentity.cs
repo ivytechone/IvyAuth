@@ -2,8 +2,8 @@
 {
 	public interface IIdentity
 	{
-		string Id { get; }
-		string Name { get; }
-		string TimeZone { get; }
+		string? Id { get; }
+		string? Name { get; }
+		string? TimeZone { get; }
 	}
 }
