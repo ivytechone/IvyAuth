@@ -21,7 +21,10 @@ namespace IvyAuth
 			_config = config;
 		}
 
-		public X509Certificate2 GetPublicKeyCertificate() => X509Certificate2.CreateFromPem(_config.certPem);
+		public IEnumerable<X509Certificate2> GetPublicKeyCertificates() 
+		{
+			yield return X509Certificate2.CreateFromPem(_config.certPem);
+		}
 
 		public X509Certificate2 GetCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.certPem, _config.certKey);
 	}

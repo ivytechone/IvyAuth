@@ -51,7 +51,8 @@ describe('GetCertificate', function() {
   it('should return cert', async function () {
     const res = await testHelper.makeGetCertificateRequest();
     assert.equal(res.status, 200, 'Request has 200 status');
-    assert.equal(md5(res.data), 'e31b923552ca79a71ca622bf22ecaca1', 'Certificate data is correct');
+    assert.equal(res.data.length, 1, 'Single certificate returned');
+    assert.equal(md5(res.data[0]), 'e31b923552ca79a71ca622bf22ecaca1', 'Certificate data is correct');
   });
 });
 

@@ -25,10 +25,10 @@ namespace IvyAuth.Controllers
 			{
 				try
 				{
-					var cert = _certificateManager.GetPublicKeyCertificate().GetRawCertData();
-
-                    var pem = PemEncoding.Write("CERTIFICATE", cert);
-					return new OkObjectResult(new String(pem));
+					var certs= _certificateManager.GetPublicKeyCertificates();
+                    var certsData = certs.Select(x => x.GetRawCertData());
+                    var pemsData = certsData.Select(x => new String(PemEncoding.Write("CERTIFICATE", x)));
+                    return new OkObjectResult(pemsData);
 				}
 				catch (Exception ex)
 				{
