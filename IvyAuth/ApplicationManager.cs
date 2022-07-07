@@ -8,19 +8,28 @@ namespace IvyAuth
 	/// </summary>
 	public class ApplicationManager : IApplicationManager
     {
-        private IApplication ivyAuthApp;
+        private IvyAuthApp _ivyAuthApp;
+        private GetBuildNumberApp _getBuildNumberApp;
+
+        private Dictionary<string, IApplication> _apps;
 
         public ApplicationManager()
         {
-            ivyAuthApp = (IApplication)(new IvyAuthApp());
+            _apps = new Dictionary<string, IApplication>();
+            _ivyAuthApp = new IvyAuthApp();
+            _getBuildNumberApp = new GetBuildNumberApp();
+          
+            _apps.Add(_ivyAuthApp.Id, _ivyAuthApp);
+            _apps.Add(_getBuildNumberApp.Id, _getBuildNumberApp);
         }
 
-        public IApplication IvyAuthApp 
-        { 
-            get
-            {
-                return ivyAuthApp;
-            }
+        public IApplication? GetAppById(string id)
+        {
+            _apps.TryGetValue(id, out IApplication? app);
+            return app;
         }
+
+        public IApplication IvyAuthApp => _ivyAuthApp;
+        public IApplication BuildNumberApp => _getBuildNumberApp;
     }
 }

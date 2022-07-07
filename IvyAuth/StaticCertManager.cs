@@ -22,5 +22,6 @@ namespace IvyAuth
 		}
 
 		public X509Certificate2 GetCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.certPem, _config.certKey);
+		public X509Certificate2 GetAidCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.aidCertKey, _config.aidCertKey);
 	}
 }
