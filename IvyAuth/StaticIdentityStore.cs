@@ -13,9 +13,16 @@ namespace IvyAuth
 		public StaticIdentityStore(StaticIdentityStoreConfig config)
 		{
 			_identities = new Dictionary<string, StaticIdentiyStoreIdentity>();
-			foreach (var identity in config.identities)
+
+			if (config is not null && config.identities is not null)
 			{
-				_identities.Add(identity.UserName, identity);
+				foreach (var identity in config.identities)
+				{
+					if (identity.UserName is not null)
+					{
+						_identities.Add(identity.UserName, identity);
+					}
+				}
 			}
 		}
 
