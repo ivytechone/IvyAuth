@@ -48,6 +48,18 @@ async function makeRequest(requestBody) {
     });
 }
 
+async function makeGetCertificateRequest(requestBody) {
+    return await axios.get('http://localhost:5000/api/GetCertificate', requestBody).catch(function(error) {
+        if (error.response) {
+            return {
+                status: error.response.status,
+                data: error.response.data,
+            };
+        }
+        throw error;
+    });
+}
+
 function setupTestRunDir(targetDir)
 {
     return new Promise(resolve => {
@@ -115,4 +127,4 @@ function launchServer(targetDir) {
     });
 }
 
-module.exports = {startServerWithSettings, ping, makeRequest, stopServer}
+module.exports = {startServerWithSettings, ping, makeRequest, makeGetCertificateRequest, stopServer}
