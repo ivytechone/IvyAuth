@@ -9,11 +9,11 @@ namespace IvyAuth.Controllers
     [ApiController]
 	public class AnonymousIdController : ControllerBase
 	{
-		private readonly ILogger<GenerateTokenController> _logger;
+		private readonly ILogger<AnonymousIdController> _logger;
 		private readonly ICertificateManager _certificateManager;
 		private readonly IApplicationManager _applicationManager;
 
-        public AnonymousIdController(Logger<GenerateTokenController> logger, ICertificateManager certificateManager, IApplicationManager applicationManager)
+        public AnonymousIdController(ILogger<AnonymousIdController> logger, ICertificateManager certificateManager, IApplicationManager applicationManager)
         {
             _logger = logger;
             _certificateManager = certificateManager;
@@ -21,6 +21,7 @@ namespace IvyAuth.Controllers
         }
 
         [HttpGet]
+        [Route("api/anonymousid/")]
         public IActionResult Get()
         {
             var cert = _certificateManager.GetAidCertificateWithPrivateKey();
@@ -30,7 +31,8 @@ namespace IvyAuth.Controllers
                 .WithAlgorithm(new RS256Algorithm(cert))
                 .AddClaim("exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
                 .AddClaim("iss", "ivytech.one")
-                .AddClaim("aud", _applicationManager.BuildNumberApp)
+                .AddClaim("sub", Guid.NewGuid().ToString().ToUpperInvariant())
+                .AddClaim("aud", _applicationManager.BuildNumberApp.Id)
                 .AddClaim("scopes", "")
                 .AddClaim("zoneinfo", "")
                 .Encode();

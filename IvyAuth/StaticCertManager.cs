@@ -13,7 +13,11 @@ namespace IvyAuth
 
 		public StaticCertManager(StaticCertManagerConfig config)
 		{
-			if (config == null || String.IsNullOrWhiteSpace(config.certPem) || String.IsNullOrWhiteSpace(config.certKey))
+			if (config == null ||
+			  String.IsNullOrWhiteSpace(config.certPem) ||
+			  String.IsNullOrWhiteSpace(config.certKey) ||
+			  String.IsNullOrWhiteSpace(config.aidCertPem) ||
+			  String.IsNullOrWhiteSpace(config.aidCertPem))
 			{
 				throw new Exception("StaticCertManagerConfig Missing");
 			}
@@ -22,6 +26,6 @@ namespace IvyAuth
 		}
 
 		public X509Certificate2 GetCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.certPem, _config.certKey);
-		public X509Certificate2 GetAidCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.aidCertKey, _config.aidCertKey);
+		public X509Certificate2 GetAidCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.aidCertPem, _config.aidCertKey);
 	}
 }

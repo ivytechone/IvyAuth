@@ -26,7 +26,7 @@ describe('Ping', function () {
 describe('GenerateToken', function () {
   describe('With valid credentials', function () {
     it('should return valid token', async function () {
-      const res = await testHelper.makeRequest(requestBodyValidCreds);
+      const res = await testHelper.makePostRequest('GenerateToken', requestBodyValidCreds);
       assert.equal(res.status, 200, 'Request has 200 status');
       
       const decoder = createDecoder();
@@ -39,10 +39,22 @@ describe('GenerateToken', function () {
 
   describe('With invalid credentials', function () {
     it('should return 401', async function () {
-      const res = await testHelper.makeRequest(requestBodyInvlaidCreds);
+      const res = await testHelper.makePostRequest('GenerateToken', requestBodyInvlaidCreds);
       console.log('teststatus', res.status);
-      assert.equal(res.status, 401, 'Request has 4011 status');
+      assert.equal(res.status, 401, 'Request has 401 status');
     });
+  });
+});
+
+describe('Anonymous Id', function() {
+  it('get', async function() {
+    const res = await testHelper.makeGetRequest('anonymousid', undefined);
+    assert.equal(res.status, 200, 'Request has 200 status');
+    const decoder = createDecoder();
+    var token = decoder(res.data);
+    assert.equal(token.iss, 'ivytech.one');
+    assert.ok(token.sub.length > 0);
+    assert.equal(token.aud, '2695BA2C-9C39-4D13-8AC3-B625A0963A19');
   });
 });
 

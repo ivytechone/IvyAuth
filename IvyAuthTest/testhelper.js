@@ -36,8 +36,19 @@ async function ping() {
     return await axios.get('http://localhost:5000/api/ping');
 }
 
-async function makeRequest(requestBody) {
-    return await axios.post('http://localhost:5000/api/GenerateToken', requestBody).catch(function(error) {
+async function makeGetRequest(api, requestBody) {
+    return await axios.get('http://localhost:5000/api/' + api, requestBody).catch(function(error) {
+        if (error.response) {
+            return {
+                status: error.response.status,
+                data: error.response.data,
+            };
+        }
+        throw error;
+    });
+}
+async function makePostRequest(api, requestBody) {
+    return await axios.post('http://localhost:5000/api/' + api, requestBody).catch(function(error) {
         if (error.response) {
             return {
                 status: error.response.status,
@@ -115,4 +126,4 @@ function launchServer(targetDir) {
     });
 }
 
-module.exports = {startServerWithSettings, ping, makeRequest, stopServer}
+module.exports = {startServerWithSettings, ping, makeGetRequest, makePostRequest, stopServer}
