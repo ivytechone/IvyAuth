@@ -29,16 +29,14 @@ namespace IvyAuth.Controllers
 
             var token = JwtBuilder.Create()
                 .WithAlgorithm(new RS256Algorithm(cert))
-                .AddClaim("exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
+                .AddClaim("iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                 .AddClaim("iss", "ivytech.one")
                 .AddClaim("sub", Guid.NewGuid().ToString().ToUpperInvariant())
                 .AddClaim("aud", _applicationManager.BuildNumberApp.Id)
-                .AddClaim("scopes", "")
-                .AddClaim("zoneinfo", "")
+                .AddClaim("zoneinfo", "America/Los_Angeles")
                 .Encode();
 
             return new OkObjectResult(token);
         }
-
     }
 }
