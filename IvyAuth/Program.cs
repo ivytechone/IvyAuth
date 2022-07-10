@@ -15,6 +15,7 @@ try
 	builder.Services.AddControllers();
 	var app = builder.Build();
 	app.MapControllers();
+	app.UseMiddleware<RequestLogger>();
 	app.Run();
 }
 catch (Exception ex)

@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 
 namespace IvyAuth
 {
-	public static class Logger
+	public static class Logger 
 	{
 		public static Serilog.Core.Logger GetLogger(SerilogConfig config)
 		{
@@ -23,6 +23,7 @@ namespace IvyAuth
 						.WriteTo.Elasticsearch(elasticSearchOptions)
 						.MinimumLevel.Error()
 						.MinimumLevel.Override("IvyAuth", LogEventLevel.Information)
+						.Enrich.FromLogContext()
 						.CreateLogger();
 		}
 	}
