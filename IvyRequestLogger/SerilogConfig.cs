@@ -1,4 +1,4 @@
-﻿namespace IvyAuth.Config
+﻿namespace IvyTech.RequestLogger
 {
 	public class SerilogConfig
 	{

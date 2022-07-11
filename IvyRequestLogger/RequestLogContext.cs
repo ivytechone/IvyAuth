@@ -1,11 +1,11 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace IvyAuth
+namespace IvyTech.RequestLogger
 {
-	public class RequestLogContext : ILogEventEnricher
+	public class RequestLoggerContext : ILogEventEnricher
 	{
-		public RequestLogContext()
+		public RequestLoggerContext()
 		{
 			RequestId = Guid.NewGuid().ToString().ToUpperInvariant();
 		}

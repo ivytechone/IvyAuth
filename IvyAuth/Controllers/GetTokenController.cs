@@ -3,6 +3,7 @@ using IvyAuth.Interfaces;
 using JWT.Algorithms;
 using JWT.Builder;
 using Microsoft.AspNetCore.Mvc;
+using IvyTech.RequestLogger;
 
 namespace IvyAuth.Controllers
 {
@@ -26,16 +27,11 @@ namespace IvyAuth.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody] UserNamePassword creds)
 		{
-			RequestLogContext? requestLogContext = (RequestLogContext?)HttpContext.Items["requestLogContext"];
-
-			if (requestLogContext == null)
-			{
-				throw new ArgumentNullException("logContext");
-			}
+			var requestLogContext = HttpContext.GetRequestLoggerContext();
 
 			if (creds == null)
 			{
-				requestLogContext.Diag = "Bad Request";
+				requestLogContext.Diag = DiagCodes.BadRequest;
 				return new UnauthorizedResult();
 			}
 
@@ -43,7 +39,7 @@ namespace IvyAuth.Controllers
 
 			if (identity == null)
 			{
-				requestLogContext.Diag = "Authentication failed";
+				requestLogContext.Diag = DiagCodes.AuthFailed;
 				return new UnauthorizedResult();
 			}
 
