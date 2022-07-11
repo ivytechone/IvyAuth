@@ -58,8 +58,7 @@ namespace IvyTech.RequestLogger
 		public static Serilog.Core.Logger GetLogger(RequestLoggerConfig config)
 		{
 			var elasticSearchOptions = new ElasticsearchSinkOptions(new Uri(config.ElasticSearchURL));
-			elasticSearchOptions.AutoRegisterTemplate = true;
-			elasticSearchOptions.AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7;
+			elasticSearchOptions.AutoRegisterTemplate = false;
 			elasticSearchOptions.TypeName = null;
 			elasticSearchOptions.InlineFields = true;
 			elasticSearchOptions.BatchAction = ElasticOpType.Create;
