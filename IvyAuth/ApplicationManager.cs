@@ -25,6 +25,11 @@ namespace IvyAuth
 
         public IApplication? GetAppById(string id)
         {
+            if (id is null)
+            {
+                return null;
+            }
+            
             _apps.TryGetValue(id, out IApplication? app);
             return app;
         }

@@ -36,8 +36,8 @@ async function ping() {
     return await axios.get('http://localhost:5000/api/ping');
 }
 
-async function makeGetRequest(api, requestBody) {
-    return await axios.get('http://localhost:5000/api/' + api, requestBody).catch(function(error) {
+async function makeGetRequest(api, headers) {
+    return await axios.get('http://localhost:5000/api/' + api, headers).catch(function(error) {
         if (error.response) {
             return {
                 status: error.response.status,
