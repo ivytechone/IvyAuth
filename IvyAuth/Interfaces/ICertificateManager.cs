@@ -5,5 +5,6 @@ namespace IvyAuth.Interfaces
 	public interface ICertificateManager
 	{
 		X509Certificate2 GetCertificateWithPrivateKey();
+		X509Certificate2 GetAidCertificateWithPrivateKey();
 	}
 }
