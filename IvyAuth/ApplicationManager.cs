@@ -23,7 +23,7 @@ namespace IvyAuth
             _apps.Add(_getBuildNumberApp.Id, _getBuildNumberApp);
         }
 
-        public IApplication? GetAppById(string id)
+        public IApplication? GetAppById(string? id)
         {
             if (id is null)
             {

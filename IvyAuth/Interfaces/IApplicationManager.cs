@@ -5,6 +5,6 @@ namespace IvyAuth.Interfaces
         IApplication IvyAuthApp { get; }
         IApplication BuildNumberApp {get;}
 
-        IApplication? GetAppById(string id);
+        IApplication? GetAppById(string? id);
     }
 }
