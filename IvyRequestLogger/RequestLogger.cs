@@ -47,10 +47,29 @@ namespace IvyTech.RequestLogger
 				}
 				finally
 				{
-					_logger?.Information("{method} {path} {responseCode}",
-						context.Request.Method,
-						context.Request.Path.Value,
-						context.Response.StatusCode);
+					var messageTemplate = "{method} {path} {responseCode}";
+
+					if (context.Response.StatusCode < 400)
+					{
+						_logger?.Information(messageTemplate,
+							context.Request.Method,
+							context.Request.Path.Value,
+							context.Response.StatusCode);
+					}
+					else if (context.Response.StatusCode < 500)
+					{
+						_logger?.Warning(messageTemplate,
+							context.Request.Method,
+							context.Request.Path.Value,
+							context.Response.StatusCode);
+					}
+					else
+					{
+						_logger?.Error(messageTemplate,
+							context.Request.Method,
+							context.Request.Path.Value,
+							context.Response.StatusCode);
+					}
 				}
 			}
 		}
@@ -62,13 +81,13 @@ namespace IvyTech.RequestLogger
 			elasticSearchOptions.TypeName = null;
 			elasticSearchOptions.InlineFields = true;
 			elasticSearchOptions.BatchAction = ElasticOpType.Create;
-			elasticSearchOptions.IndexFormat = $"RequestLog-{config.Environment}-index-{{0:yyyy.MM}}";
+			elasticSearchOptions.IndexFormat = $"request-log-{config.Environment}-index-{{0:yyyy.MM}}";
 			elasticSearchOptions.ModifyConnectionSettings = c => c.GlobalHeaders(new NameValueCollection { { "Authorization", $"ApiKey {config.ApiKey}" } });
 
 			return new LoggerConfiguration()
 						.WriteTo.Elasticsearch(elasticSearchOptions)
 						.Enrich.FromLogContext()
-						.Enrich.WithProperty("AppName", config.AppName)
+						.Enrich.WithProperty("appName", config.AppName)
 						.CreateLogger();
 		}
 	}
