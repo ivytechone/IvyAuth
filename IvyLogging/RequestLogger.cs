@@ -19,10 +19,6 @@ namespace IvyTech.Logging
 				{
 					_logger = GetLogger(requestLoggerConfig);
 				}
-				else
-				{
-					throw new IvyLoggingConfigMissingException();
-				}
 			}
 
 			_requestDelegate = requestDelegate;
