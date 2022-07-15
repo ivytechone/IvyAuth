@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IvyRequestLogger\IvyRequestLogger.csproj" />
-    <ProjectReference Include="..\IvyDebugLogger\IvyDebugLogger.csproj" />
+    <ProjectReference Include="..\IvyLogging\IvyLogging.csproj" />
   </ItemGroup>
 
 </Project>

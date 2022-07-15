@@ -1,4 +1,4 @@
-﻿namespace IvyTech.RequestLogger
+﻿namespace IvyTech.Logging
 {
 	public class DiagCodes
 	{

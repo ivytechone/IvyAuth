@@ -2,7 +2,7 @@
 using Serilog.Sinks.Elasticsearch;
 using System.Collections.Specialized;
 
-namespace IvyTech.RequestLogger
+namespace IvyTech.Logging
 {
 	public class RequestLogger 
 	{
@@ -13,7 +13,7 @@ namespace IvyTech.RequestLogger
 		{
 			if (_logger is null)
 			{
-				var requestLoggerConfig = configuration.GetSection("RequestLogger").Get<RequestLoggerConfig>();
+				var requestLoggerConfig = configuration.GetSection("IvyLogging").Get<IvyLoggingConfig>();
 
 				if (requestLoggerConfig != null)
 				{
@@ -21,7 +21,7 @@ namespace IvyTech.RequestLogger
 				}
 				else
 				{
-					throw new RequestLoggerConfigException();
+					throw new IvyLoggingConfigMissingException();
 				}
 			}
 
@@ -74,8 +74,17 @@ namespace IvyTech.RequestLogger
 			}
 		}
 
-		public static Serilog.Core.Logger GetLogger(RequestLoggerConfig config)
+		public static Serilog.Core.Logger? GetLogger(IvyLoggingConfig config)
 		{
+			if (config is null ||
+				config.ElasticSearchURL is null ||
+				config.ApiKey is null ||
+				config.Environment is null ||
+				config.AppName is null)
+			{
+				return null;
+			}
+
 			var elasticSearchOptions = new ElasticsearchSinkOptions(new Uri(config.ElasticSearchURL));
 			elasticSearchOptions.AutoRegisterTemplate = false;
 			elasticSearchOptions.TypeName = null;

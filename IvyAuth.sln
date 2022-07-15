@@ -5,9 +5,7 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IvyAuth", "IvyAuth\IvyAuth.csproj", "{F3459394-D96B-482A-8A78-32DC5648AC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IvyRequestLogger", "IvyRequestLogger\IvyRequestLogger.csproj", "{1293554E-4C71-4577-B243-A684D8C0615D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IvyDebugLogger", "IvyDebugLogger\IvyDebugLogger.csproj", "{14A7A2A3-74D9-4465-8BCA-8406AC99BD2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IvyLogging", "IvyLogging\IvyLogging.csproj", "{1293554E-4C71-4577-B243-A684D8C0615D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{1293554E-4C71-4577-B243-A684D8C0615D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1293554E-4C71-4577-B243-A684D8C0615D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1293554E-4C71-4577-B243-A684D8C0615D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14A7A2A3-74D9-4465-8BCA-8406AC99BD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14A7A2A3-74D9-4465-8BCA-8406AC99BD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14A7A2A3-74D9-4465-8BCA-8406AC99BD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14A7A2A3-74D9-4465-8BCA-8406AC99BD2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

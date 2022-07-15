@@ -3,7 +3,7 @@ using IvyAuth.Interfaces;
 using JWT.Algorithms;
 using JWT.Builder;
 using Microsoft.AspNetCore.Mvc;
-using IvyTech.RequestLogger;
+using IvyTech.Logging;
 
 namespace IvyAuth.Controllers
 {

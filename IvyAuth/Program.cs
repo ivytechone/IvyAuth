@@ -1,12 +1,11 @@
 using IvyAuth;
 using IvyAuth.Config;
 using IvyAuth.Interfaces;
-using IvyTech.RequestLogger;
-using IvyTech.DebugLogger;
+using IvyTech.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var logger = DebugLogger.GetLogger(builder.Configuration);
+var logger = DebugLogger.CreateLogger(builder.Configuration);
 
 try
 {
@@ -17,11 +16,10 @@ try
 	builder.Services.AddControllers();
 	var app = builder.Build();
 	app.MapControllers();
-	app.UseIvyRequestLogger();
-	app.UseIvyExceptionLogger();
+	app.UseIvyLogging();
 	app.Run();
 }
 catch (Exception ex)
 {
-	logger.Fatal("Unhandled Excpetion", ex);
+	logger?.Fatal("Unhandled Excpetion", ex);
 }

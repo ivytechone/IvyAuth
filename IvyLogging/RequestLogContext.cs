@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace IvyTech.RequestLogger
+namespace IvyTech.Logging
 {
 	public class RequestLoggerContext : ILogEventEnricher
 	{

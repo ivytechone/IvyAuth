@@ -1,6 +1,6 @@
-﻿namespace IvyTech.DebugLogger
+﻿namespace IvyTech.Logging
 {
-	public class DebugLoggerConfig
+	public class IvyLoggingConfig
 	{
 		public string? ElasticSearchURL { get; set; }
 		public string? AppName { get; set; }
