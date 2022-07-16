@@ -43,6 +43,7 @@ namespace IvyTech.Logging
 							.Enrich.WithProperty("appName", AppContext.AppName ?? throw new ArgumentNullException("AppContext.AppName"))
 							.Enrich.WithProperty("version", AppContext.Version ?? throw new ArgumentNullException("AppContext.Version"))
 							.Enrich.With<RequestLoggerContextEnricher>()
+							.Enrich.With<RequestTagEnricher>()
 							.CreateLogger();
 			}
 

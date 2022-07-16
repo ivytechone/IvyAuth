@@ -89,6 +89,7 @@ namespace IvyTech.Logging
 			return new LoggerConfiguration()
 						.WriteTo.Elasticsearch(elasticSearchOptions)
 						.Enrich.With<RequestLoggerContextEnricher>()
+						.Enrich.With<RequestTagEnricher>()
 						.Enrich.WithProperty("appName", AppContext.AppName ?? throw new ArgumentNullException("AppContext.AppName"))
 						.Enrich.WithProperty("version", AppContext.Version ?? throw new ArgumentNullException("AppContext.Version"))
 						.CreateLogger();
