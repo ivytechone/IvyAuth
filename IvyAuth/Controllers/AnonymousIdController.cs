@@ -51,7 +51,7 @@ namespace IvyAuth.Controllers
             // Check if user provided valid IANA timezone
             else if (!TimeZoneInfo.TryConvertIanaIdToWindowsId(timeZone, out string? windowsId))
             {
-                _logger.LogWarning("{apiname}: {msg}", apiName, "x-timezone contains invalid time zone");
+                _logger.LogWarning("{apiname}: {msg} {timezone}", apiName, "x-timezone contains invalid time zone", timeZone);
                 this.HttpContext.GetRequestLoggerContext().Diag = "invalidTimeZone";
                 return new BadRequestObjectResult("x-timezone contains invalid time zone");
             }
