@@ -38,6 +38,8 @@ namespace IvyTech.Logging
 
 				_logger = new LoggerConfiguration()
 							.WriteTo.Elasticsearch(elasticSearchOptions)
+							.MinimumLevel.Information()
+							.MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
 							.Enrich.WithProperty("appName", AppContext.AppName ?? throw new ArgumentNullException("AppContext.AppName"))
 							.Enrich.WithProperty("version", AppContext.Version ?? throw new ArgumentNullException("AppContext.Version"))
 							.CreateLogger();
