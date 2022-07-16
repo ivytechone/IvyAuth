@@ -29,43 +29,40 @@ namespace IvyTech.Logging
 			var requestLoggerContext = new RequestLoggerContext();
 			context.Items[Constants.RequestLoggerContextKey] = requestLoggerContext;
 
-			using (Serilog.Context.LogContext.Push(requestLoggerContext))
+			try
 			{
-				try
-				{
-					await _requestDelegate(context);
-				}
-				catch (Exception)
-				{
-					requestLoggerContext.Diag = DiagCodes.UnhandledException;
-					context.Response.StatusCode = 500;
-					throw;
-				}
-				finally
-				{
-					var messageTemplate = "{method} {path} {responseCode}";
+				await _requestDelegate(context);
+			}
+			catch (Exception)
+			{
+				requestLoggerContext.Diag = DiagCodes.UnhandledException;
+				context.Response.StatusCode = 500;
+				throw;
+			}
+			finally
+			{
+				var messageTemplate = "{method} {path} {responseCode}";
 
-					if (context.Response.StatusCode < 400)
-					{
-						_logger?.Information(messageTemplate,
-							context.Request.Method,
-							context.Request.Path.Value,
-							context.Response.StatusCode);
-					}
-					else if (context.Response.StatusCode < 500)
-					{
-						_logger?.Warning(messageTemplate,
-							context.Request.Method,
-							context.Request.Path.Value,
-							context.Response.StatusCode);
-					}
-					else
-					{
-						_logger?.Error(messageTemplate,
-							context.Request.Method,
-							context.Request.Path.Value,
-							context.Response.StatusCode);
-					}
+				if (context.Response.StatusCode < 400)
+				{
+					_logger?.Information(messageTemplate,
+						context.Request.Method,
+						context.Request.Path.Value,
+						context.Response.StatusCode);
+				}
+				else if (context.Response.StatusCode < 500)
+				{
+					_logger?.Warning(messageTemplate,
+						context.Request.Method,
+						context.Request.Path.Value,
+						context.Response.StatusCode);
+				}
+				else
+				{
+					_logger?.Error(messageTemplate,
+						context.Request.Method,
+						context.Request.Path.Value,
+						context.Response.StatusCode);
 				}
 			}
 		}
@@ -91,7 +88,7 @@ namespace IvyTech.Logging
 
 			return new LoggerConfiguration()
 						.WriteTo.Elasticsearch(elasticSearchOptions)
-						.Enrich.FromLogContext()
+						.Enrich.With<RequestLoggerContextEnricher>()
 						.Enrich.WithProperty("appName", config.AppName)
 						.CreateLogger();
 		}

@@ -9,6 +9,7 @@ var logger = DebugLogger.CreateLogger(builder.Configuration);
 
 try
 {
+	builder.Services.AddHttpContextAccessor();
 	builder.Services.AddLogging(x => x.AddSerilog(logger));
 	builder.Services.AddSingleton<IIdentityStore>(x => new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>()));
 	builder.Services.AddSingleton<ICertificateManager>(x => new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>()));

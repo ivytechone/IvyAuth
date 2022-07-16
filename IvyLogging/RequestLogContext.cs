@@ -3,7 +3,7 @@ using Serilog.Events;
 
 namespace IvyTech.Logging
 {
-	public class RequestLoggerContext : ILogEventEnricher
+	public class RequestLoggerContext
 	{
 		public RequestLoggerContext()
 		{
@@ -13,12 +13,5 @@ namespace IvyTech.Logging
 		public string RequestId { get; }
 		public string? Diag { get; set; }
 		public string? Identity { get; set; }
-
-		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-		{
-			logEvent.AddOrUpdateProperty(propertyFactory.CreateProperty("requestId", RequestId));
-			logEvent.AddOrUpdateProperty(propertyFactory.CreateProperty("diag", Diag));
-			logEvent.AddOrUpdateProperty(propertyFactory.CreateProperty("identity", Identity));
-		}
 	}
 }
