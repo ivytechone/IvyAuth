@@ -6,18 +6,17 @@ namespace IvyAuth.Controllers
 	[Route("api/ping/")]
 	public class PingController : ControllerBase
 	{
-		private readonly ILogger<GenerateTokenController> _logger;
+		private readonly ILogger<PingController> _logger;
 
-		public PingController(ILogger<GenerateTokenController> logger)
+		public PingController(ILogger<PingController> logger)
 		{
-			logger.LogInformation("Initializing PingController");
 			_logger = logger;
 		}
 
 		[HttpGet]
 		public IActionResult Get()
 		{
-			_logger.LogInformation("Ping");
+			_logger.LogInformation("Ping Called");
 			return new OkObjectResult($"IvyAuth {AppInfo.Version}");
 		}
 	}
