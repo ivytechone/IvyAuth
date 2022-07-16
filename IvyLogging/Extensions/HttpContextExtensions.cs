@@ -1,4 +1,6 @@
-﻿namespace IvyTech.Logging
+﻿using Microsoft.Extensions.Primitives;
+
+namespace IvyTech.Logging
 {
 	public static class HttpContextExtensions
 	{
@@ -9,6 +11,13 @@
 				return (RequestLoggerContext)requestLoggerContext;
 			}
 			throw new MissingRequestLoggerContextException();
+		}
+
+		public static string? GetRequestTag(this HttpContext httpContext)
+		{
+			httpContext.Request.Headers.TryGetValue(Constants.RequestTagHeaderName, out StringValues value);
+
+			return value.FirstOrDefault();
 		}
 	}
 }
