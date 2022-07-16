@@ -42,6 +42,7 @@ namespace IvyTech.Logging
 							.MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
 							.Enrich.WithProperty("appName", AppContext.AppName ?? throw new ArgumentNullException("AppContext.AppName"))
 							.Enrich.WithProperty("version", AppContext.Version ?? throw new ArgumentNullException("AppContext.Version"))
+							.Enrich.With<RequestLoggerContextEnricher>()
 							.CreateLogger();
 			}
 
