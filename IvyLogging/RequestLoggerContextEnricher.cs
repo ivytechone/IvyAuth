@@ -5,7 +5,7 @@ namespace IvyTech.Logging
 {
 	public class RequestLoggerContextEnricher : ILogEventEnricher
 	{
-        private readonly RequestLoggerContext? requestLoggerContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public RequestLoggerContextEnricher() : this(new HttpContextAccessor())
         {
@@ -13,11 +13,13 @@ namespace IvyTech.Logging
 
 		public RequestLoggerContextEnricher(IHttpContextAccessor httpContextAccessor)
 		{
-            requestLoggerContext = httpContextAccessor.HttpContext?.GetRequestLoggerContext();
+           _httpContextAccessor = httpContextAccessor;
 		}
 
 		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 		{
+            var requestLoggerContext = _httpContextAccessor.HttpContext?.GetRequestLoggerContext();
+
             if (requestLoggerContext is not null)
             {
                 logEvent.AddOrUpdateProperty(propertyFactory.CreateProperty("requestId", requestLoggerContext.RequestId));

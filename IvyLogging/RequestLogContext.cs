@@ -7,7 +7,7 @@ namespace IvyTech.Logging
 	{
 		public RequestLoggerContext()
 		{
-			RequestId = Guid.NewGuid().ToString().ToUpperInvariant();
+			RequestId = Guid.NewGuid().ToString();
 		}
 
 		public string RequestId { get; }
