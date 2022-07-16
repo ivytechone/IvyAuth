@@ -19,27 +19,27 @@ namespace IvyTech.Logging
 			{
 				var config = appConfig.GetSection("IvyLogging").Get<IvyLoggingConfig>();
 
-				if (config is null ||
-					config.ElasticSearchURL is null ||
-					config.ApiKey is null ||
-					config.Environment is null ||
-					config.AppName is null)
+				if (config is null)
 				{
 					return null;
 				}
 
-				var elasticSearchOptions = new ElasticsearchSinkOptions(new Uri(config.ElasticSearchURL));
+				var ElasticSearchURL = config.ElasticSearchURL ?? throw new ArgumentNullException("IvyLoggingConfig.ElasticSearchURL");
+				var ApiKey = config.ApiKey ?? throw new ArgumentNullException("IvyLoggingConfig.ApiKey");
+				var Environment = config.Environment ?? throw new ArgumentNullException("IvyLoggingConfig.Environment");
+
+				var elasticSearchOptions = new ElasticsearchSinkOptions(new Uri(ElasticSearchURL));
 				elasticSearchOptions.AutoRegisterTemplate = false;
 				elasticSearchOptions.TypeName = null; 
 				elasticSearchOptions.InlineFields = true;
 				elasticSearchOptions.BatchAction = ElasticOpType.Create;
-				elasticSearchOptions.IndexFormat = $"debug-log-{config.Environment}-index-{{0:yyyy.MM}}";
-				elasticSearchOptions.ModifyConnectionSettings = c => c.GlobalHeaders(new NameValueCollection { { "Authorization", $"ApiKey {config.ApiKey}" } });
+				elasticSearchOptions.IndexFormat = $"debug-log-{Environment}-index-{{0:yyyy.MM}}";
+				elasticSearchOptions.ModifyConnectionSettings = c => c.GlobalHeaders(new NameValueCollection { { "Authorization", $"ApiKey {ApiKey}" } });
 
 				_logger = new LoggerConfiguration()
 							.WriteTo.Elasticsearch(elasticSearchOptions)
-							.Enrich.FromLogContext()
-							.Enrich.WithProperty("appName", config.AppName)
+							.Enrich.WithProperty("appName", AppContext.AppName ?? throw new ArgumentNullException("AppContext.AppName"))
+							.Enrich.WithProperty("version", AppContext.Version ?? throw new ArgumentNullException("AppContext.Version"))
 							.CreateLogger();
 			}
 

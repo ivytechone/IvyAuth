@@ -4,6 +4,10 @@ using IvyAuth.Interfaces;
 using IvyTech.Logging;
 using Serilog;
 
+// App level logging context
+IvyTech.Logging.AppContext.SetAppName("IvyAuth");
+IvyTech.Logging.AppContext.SetVersion(AppInfo.Version);
+
 var builder = WebApplication.CreateBuilder(args);
 var logger = DebugLogger.CreateLogger(builder.Configuration);
 
