@@ -18,6 +18,8 @@ jobs:
       run: sed -i -E "s/(Version => \").+(\";)/\1$BUILDNUM\2/" ./IvyAuth/AppInfo.cs
     - name: Test inject build number
       run: cat ./IvyAuth/AppInfo.cs
+    - name: Add package source
+      run: dotnet nuget add source --username robert --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ivytechone/index.json"
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
