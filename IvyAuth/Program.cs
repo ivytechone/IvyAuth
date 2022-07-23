@@ -1,6 +1,7 @@
 using IvyAuth;
 using IvyAuth.Config;
 using IvyAuth.Interfaces;
+using IvyTech.IvyWebApi;
 using IvyTech.Logging;
 using Serilog;
 
@@ -13,6 +14,7 @@ var logger = DebugLogger.CreateLogger(builder.Configuration);
 
 try
 {
+	builder.UseIvyWebApi("IvyAuth", AppInfo.Version);
 	builder.Services.AddHttpContextAccessor();
 	builder.Services.AddLogging(x => x.AddSerilog(logger));
 	builder.Services.AddSingleton<IIdentityStore>(x => new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>()));
@@ -20,6 +22,7 @@ try
 	builder.Services.AddSingleton<IApplicationManager>(x => new ApplicationManager());
 	builder.Services.AddControllers();
 	var app = builder.Build();
+	app.AddPing();
 	app.MapControllers();
 	app.UseIvyLogging();
 	app.Run();
