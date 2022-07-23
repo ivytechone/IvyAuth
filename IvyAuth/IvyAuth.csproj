@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IvyLogging\IvyLogging.csproj" />
+    <PackageReference Include="IvyTech.IvyLogging" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
