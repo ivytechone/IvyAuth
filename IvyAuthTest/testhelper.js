@@ -33,7 +33,7 @@ function stopServer() {
 }
 
 async function ping() {
-    return await axios.get('http://localhost:5000/api/ping');
+    return await axios.get('http://localhost:5000/ping');
 }
 
 async function makeGetRequest(api, headers) {
