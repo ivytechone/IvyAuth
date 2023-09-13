@@ -45,11 +45,12 @@ namespace IvyAuth.Controllers
 
 			requestLogContext.Identity = identity.Id;
 
-			var cert = _certificateManager.GetCertificateWithPrivateKey();
+			var cert = _certificateManager.GetPrimaryCertificateWithPrivateKey();
 			var app = _applicationManager.IvyAuthApp;
 
 			var token = JwtBuilder.Create()
-				.WithAlgorithm(new RS256Algorithm(cert))
+				.WithAlgorithm(new RS256Algorithm(cert.Certificate))
+				.AddHeader("kid", cert.Kid)
 				.AddClaim("exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
 				.AddClaim("iss", "ivytech.one")
 				.AddClaim("aud", app.Id)

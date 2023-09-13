@@ -1,5 +1,6 @@
 ﻿using IvyAuth.Config;
 using IvyAuth.Interfaces;
+using IvyAuth.DataModels;
 using System.Security.Cryptography.X509Certificates;
 
 namespace IvyAuth
@@ -25,7 +26,20 @@ namespace IvyAuth
 			_config = config;
 		}
 
-		public X509Certificate2 GetCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.certPem, _config.certKey);
+		public JwtKeyPrivate GetPrimaryCertificateWithPrivateKey() => new JwtKeyPrivate() {
+			Kid = "1",
+			Certificate = X509Certificate2.CreateFromPem(_config.certPem, _config.certKey)
+		};
+
 		public X509Certificate2 GetAidCertificateWithPrivateKey() => X509Certificate2.CreateFromPem(_config.aidCertPem, _config.aidCertKey);
+
+		public IEnumerable<JwtKey> GetPublicKeys()
+		{
+			yield return new JwtKey()
+			{
+				Kid = "1",
+				Key = _config.certPem
+			};
+		}
 	}
 }
