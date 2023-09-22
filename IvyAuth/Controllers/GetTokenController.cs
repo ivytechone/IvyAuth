@@ -1,7 +1,5 @@
 using IvyAuth.DataModels;
 using IvyAuth.Interfaces;
-using JWT.Algorithms;
-using JWT.Builder;
 using Microsoft.AspNetCore.Mvc;
 using IvyTech.Logging;
 
@@ -12,14 +10,14 @@ namespace IvyAuth.Controllers
 	public class GenerateTokenController : ControllerBase
 	{
 		//private readonly ILogger<GenerateTokenController> _logger;
-		private readonly ICertificateManager _certificateManager;
 		private readonly IApplicationManager _applicationManager;
+		private readonly ITokenGenerator _tokenGenerator;
 		private readonly IIdentityStore _identityStore;
 
-		public GenerateTokenController(ILogger<GenerateTokenController> logger, ICertificateManager certificateManager, IIdentityStore identityStore, IApplicationManager applicationManager)
+		public GenerateTokenController(ILogger<GenerateTokenController> logger, ITokenGenerator tokenGenerator, IIdentityStore identityStore, IApplicationManager applicationManager)
 		{
 			//_logger = logger;
-			_certificateManager = certificateManager;
+			_tokenGenerator = tokenGenerator;
 			_applicationManager = applicationManager;
 			_identityStore = identityStore;
 		}
@@ -45,20 +43,9 @@ namespace IvyAuth.Controllers
 
 			requestLogContext.Identity = identity.Id;
 
-			var cert = _certificateManager.GetPrimaryCertificateWithPrivateKey();
 			var app = _applicationManager.IvyAuthApp;
 
-			var token = JwtBuilder.Create()
-				.WithAlgorithm(new RS256Algorithm(cert.Certificate))
-				.AddHeader("kid", cert.Kid)
-				.AddClaim("exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
-				.AddClaim("iss", "ivytech.one")
-				.AddClaim("aud", app.Id)
-				.AddClaim("sub", identity.Id)
-				.AddClaim("name", identity.Name)
-				.AddClaim("scopes", "")
-				.AddClaim("zoneinfo", identity.TimeZone)
-				.Encode();
+			var token = _tokenGenerator.GenerateToken(identity, app, "default");
 
 			return new OkObjectResult(token);
 		}
