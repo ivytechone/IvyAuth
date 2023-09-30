@@ -9,13 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 try
 {
-    builder.UseIvyWebApi("IvyAuth", AppInfo.Version);
+	builder.UseIvyWebApi("IvyAuth", AppInfo.Version);
 	builder.AddIvyDebugLogger();
 
-    var certificateManager = new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>());
-    var staticIdentityStore = new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>());
+	var certificateManager = new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>());
+	var staticIdentityStore = new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>());
 
-    builder.Services.AddHttpContextAccessor();
+	builder.Services.AddHttpContextAccessor();
 	builder.Services.AddSingleton<IIdentityStore>(x => staticIdentityStore);
 	builder.Services.AddSingleton<ICertificateManager>(x => certificateManager);
 	builder.Services.AddSingleton<IApplicationManager>(x => new ApplicationManager());
