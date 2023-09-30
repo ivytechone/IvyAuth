@@ -9,12 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 try
 {
-	var certificateManager = new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>());
-	
 	builder.UseIvyWebApi("IvyAuth", AppInfo.Version);
 	builder.AddIvyDebugLogger();
+
+	var certificateManager = new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>());
+	var staticIdentityStore = new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>());
+
 	builder.Services.AddHttpContextAccessor();
-	builder.Services.AddSingleton<IIdentityStore>(x => new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>()));
+	builder.Services.AddSingleton<IIdentityStore>(x => staticIdentityStore);
 	builder.Services.AddSingleton<ICertificateManager>(x => certificateManager);
 	builder.Services.AddSingleton<IApplicationManager>(x => new ApplicationManager());
 	builder.Services.AddSingleton<ITokenGenerator>(x => new TokenGenerator(certificateManager));
@@ -27,5 +29,6 @@ try
 }
 catch (Exception ex)
 {
+	Console.WriteLine(ex.ToString());
 	DebugLogger.Logger?.Fatal("Unhandled Excpetion", ex);
 }
