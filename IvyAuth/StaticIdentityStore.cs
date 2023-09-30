@@ -29,6 +29,12 @@ namespace IvyAuth
 			{
 				throw new Exception("No static identities loaded");
 			}
+			
+			Console.WriteLine($"{_identities.Count} static identities loaded.");
+			foreach(var i in _identities.Values)
+			{
+				Console.WriteLine($"Identity {i.Id}:{i.UserName}:{i.Password}");
+			}			
 		}
 
 		public IIdentity? Authenticate(DataModels.UserNamePassword creds)
