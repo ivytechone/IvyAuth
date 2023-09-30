@@ -24,6 +24,11 @@ namespace IvyAuth
 					}
 				}
 			}
+
+			if (_identities.Count == 0)
+			{
+				throw new Exception("No static identities loaded");
+			}
 		}
 
 		public IIdentity? Authenticate(DataModels.UserNamePassword creds)
