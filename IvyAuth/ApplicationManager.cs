@@ -17,6 +17,7 @@ namespace IvyAuth
             _apps = new Dictionary<string, IApplication>();
             _ivyAuthApp = registerApp(new IvyAuthApp());
             registerApp(new GetBuildNumberApp());
+            registerApp(new TrendApp());
             registerApp(new TestApp());
         }
 
