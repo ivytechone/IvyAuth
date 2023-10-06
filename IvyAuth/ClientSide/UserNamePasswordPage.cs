@@ -13,8 +13,8 @@ $@"<!DOCTYPE html>
     IvyTech Login
     </head>
     <body>
-      Username: <input autocomplete='username' onClick='onChangeUsername(this.value)'/>
-      Password: <input autocomplete='current-password' type='password' onClick='onChangePassword(this.value)'/>
+      Username: <input autocomplete='username' onclick='onChangeUsername(this.value)'/>
+      Password: <input autocomplete='current-password' type='password' onclick='onChangePassword(this.value)'/>
       <button onclick='onLogin()'>Login</button>
     </body>
     <script>
