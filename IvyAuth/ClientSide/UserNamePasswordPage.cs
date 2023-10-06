@@ -14,19 +14,19 @@ $@"<!DOCTYPE html>
     </head>
     <body>
       Username: <input autocomplete='username' onClick='onChangeUsername(this.value)'/>
-      Password: <input autocomplete='current-password' type='password' onClick='onChangePassword(this.value)/>
+      Password: <input autocomplete='current-password' type='password' onClick='onChangePassword(this.value)'/>
       <button onclick='onLogin()'>Login</button>
     </body>
     <script>
       var username = "";
       var password = "";
 
-      function onChangeUsername(x) {
+      function onChangeUsername(x) {{
         username = x;
-      }
-      function onChangePassword(x) {
+      }}
+      function onChangePassword(x) {{
         password = x;
-      }
+      }}
 
       async function onLogin() {{
 
