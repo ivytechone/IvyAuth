@@ -18,8 +18,8 @@ $@"<!DOCTYPE html>
       <button onclick='onLogin()'>Login</button>
     </body>
     <script>
-      var username = "";
-      var password = "";
+      var username = """";
+      var password = """";
 
       function onChangeUsername(x) {{
         username = x;
