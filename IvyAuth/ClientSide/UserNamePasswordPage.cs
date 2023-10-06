@@ -13,11 +13,21 @@ $@"<!DOCTYPE html>
     IvyTech Login
     </head>
     <body>
-      UserName: <input/>
-      Password: <input/>
+      Username: <input autocomplete='username' onClick='onChangeUsername(this.value)'/>
+      Password: <input autocomplete='current-password' type='password' onClick='onChangePassword(this.value)/>
       <button onclick='onLogin()'>Login</button>
     </body>
     <script>
+      var username = "";
+      var password = "";
+
+      function onChangeUsername(x) {
+        username = x;
+      }
+      function onChangePassword(x) {
+        password = x;
+      }
+
       async function onLogin() {{
 
         console.log('onLogin');
@@ -29,8 +39,8 @@ $@"<!DOCTYPE html>
           body: new URLSearchParams({{
             'client_id': '{client_id}',
             'scopes': '{scopes}',
-            'username': 'robert',
-            'password': '12345',
+            'username': username,
+            'password': password,
             'code_challenge': '{code_challenge}'
         }})}});
 
