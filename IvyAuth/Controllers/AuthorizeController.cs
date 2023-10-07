@@ -123,7 +123,7 @@ namespace IvyAuth.Controllers
                 return new BadRequestResult();
             }
 
-            var identity = _identityStore.Authenticate(new UserNamePassword() { UserName = p.UserName, Password = p.Password});
+            var identity = _identityStore.Authenticate(p.UserName, p.Password);
 
 			if (identity == null)
 			{

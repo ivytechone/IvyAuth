@@ -4,6 +4,6 @@ namespace IvyAuth.Interfaces
 {
 	public interface IIdentityStore
 	{
-		public IIdentity? Authenticate(UserNamePassword creds);
+		public IIdentity? Authenticate(string userId, string password);
 	}
 }

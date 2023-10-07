@@ -10,7 +10,7 @@ namespace IvyAuth
 	{
 		private Dictionary<string, StaticIdentiyStoreIdentity> _identities;
 
-		public StaticIdentityStore(StaticIdentityStoreConfig config)
+		public StaticIdentityStore(StaticIdentityStoreConfig? config)
 		{
 			_identities = new Dictionary<string, StaticIdentiyStoreIdentity>();
 
@@ -31,25 +31,21 @@ namespace IvyAuth
 			}
 			
 			Console.WriteLine($"{_identities.Count} static identities loaded.");
-			foreach(var i in _identities.Values)
-			{
-				Console.WriteLine($"Identity {i.Id}:{i.UserName}:{i.Password}");
-			}			
 		}
 
-		public IIdentity? Authenticate(DataModels.UserNamePassword creds)
+		public IIdentity? Authenticate(string userId, string password)
 		{
-			if (creds == null || String.IsNullOrWhiteSpace(creds.UserName) || String.IsNullOrEmpty(creds.Password))
+			if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrEmpty(password))
 			{
 				return null;
 			}
 
-			if (!_identities.TryGetValue(creds.UserName, out StaticIdentiyStoreIdentity? identity))
+			if (!_identities.TryGetValue(userId, out StaticIdentiyStoreIdentity? identity))
 			{
 				return null;
 			}
 
-			if (identity.Password != creds.Password)
+			if (identity.Password != password)
 			{
 				return null;
 			}

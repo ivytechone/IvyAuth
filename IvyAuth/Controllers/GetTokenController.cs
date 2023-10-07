@@ -23,17 +23,17 @@ namespace IvyAuth.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody] UserNamePassword creds)
+		public IActionResult Post([FromBody] UserIdPassword creds)
 		{
 			var requestLogContext = HttpContext.GetRequestLoggerContext();
 
-			if (creds == null)
+			if (creds == null || creds.UserId == null || creds.Password == null)
 			{
 				requestLogContext.Diag = DiagCodes.BadRequest;
 				return new UnauthorizedResult();
 			}
 
-			var identity = _identityStore.Authenticate(creds);
+			var identity = _identityStore.Authenticate(creds.UserId, creds.Password);
 
 			if (identity == null)
 			{

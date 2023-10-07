@@ -12,13 +12,13 @@ namespace IvyAuth
 	{
 		private readonly StaticCertManagerConfig _config;
 
-		public StaticCertManager(StaticCertManagerConfig config)
+		public StaticCertManager(StaticCertManagerConfig? config)
 		{
 			if (config == null ||
-			  String.IsNullOrWhiteSpace(config.certPem) ||
-			  String.IsNullOrWhiteSpace(config.certKey) ||
-			  String.IsNullOrWhiteSpace(config.aidCertPem) ||
-			  String.IsNullOrWhiteSpace(config.aidCertPem))
+			  string.IsNullOrWhiteSpace(config.certPem) ||
+			  string.IsNullOrWhiteSpace(config.certKey) ||
+			  string.IsNullOrWhiteSpace(config.aidCertPem) ||
+			  string.IsNullOrWhiteSpace(config.aidCertPem))
 			{
 				throw new Exception("StaticCertManagerConfig Missing");
 			}
