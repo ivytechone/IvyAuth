@@ -27,7 +27,7 @@ namespace IvyAuth
             }
         }
 
-        public string GenerateCode(IIdentity identity, IApplication app, string scope, string code_challenge)
+        public string GenerateCode(IIvyIdentity identity, IApplication app, string scope, string code_challenge)
         {
             var token = GenerateToken(identity, app, scope);
             var authCode = new AuthCode(token, code_challenge);
@@ -35,7 +35,7 @@ namespace IvyAuth
             return authCode.Code;
         }
 
-        public string GenerateToken(IIdentity identity, IApplication app, string scope)
+        public string GenerateToken(IIvyIdentity identity, IApplication app, string scope)
         {            
             var cert = _certificateManager.GetPrimaryCertificateWithPrivateKey();
 
@@ -46,7 +46,7 @@ namespace IvyAuth
 				.AddClaim("iss", "ivytech.one")
 				.AddClaim("aud", app.Id)
 				.AddClaim("sub", identity.Id)
-				.AddClaim("name", identity.Name)
+				.AddClaim("name", $"{identity.FirstName} {identity.LastName}")
                 .AddClaim("scope", scope)
 				.AddClaim("zoneinfo", identity.TimeZone)
 				.Encode();

@@ -5,12 +5,12 @@ var testHelper = require('./testhelper');
 testHelper.startServerWithSettings('testtesttings.json');
 
 const requestBodyValidCreds = {
-  userName: 'testuser1',
+  userId: 'testuser1@test.com',
   passWord: 'appleOrange34'
 };
 
 const requestBodyInvlaidCreds = {
-  userName: 'badusername',
+  userId: 'badusername',
   passWord: 'badpassword'
 }
 
@@ -32,7 +32,7 @@ describe('GenerateToken', function () {
       const decoder = createDecoder();
       var token = decoder(res.data);
       assert.equal(token.iss, 'ivytech.one');
-      assert.equal(token.sub, 'c6dfbcdb-25fb-444e-9f22-01911f083779');
+      assert.equal(token.sub, 'c6dfbcdb25fb444e9f2201083779');
       assert.equal(token.aud, '00000000-0000-0000-0000-000000000001');
     });
   });

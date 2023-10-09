@@ -12,9 +12,10 @@
   "StaticIdentityStore": {
     "identities": [
       {
-        "userName": "testuser1",
-        "name": "Test User 1",
-        "id": "c6dfbcdb-25fb-444e-9f22-01911f083779",
+        "email": "testuser1@test.com",
+        "firstname": "test",
+        "lastname": "user",
+        "id": "c6dfbcdb25fb444e9f2201083779",
         "password": "appleOrange34",
         "timezone": "Pacific Standard Time"
       }

@@ -1,9 +1,7 @@
-﻿using IvyAuth.DataModels;
-
-namespace IvyAuth.Interfaces
+﻿namespace IvyAuth.Interfaces
 {
 	public interface IIdentityStore
 	{
-		public IIdentity? Authenticate(string userId, string password);
+		public IIvyIdentity? Authenticate(string email, string password);
 	}
 }
