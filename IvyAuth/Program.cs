@@ -13,10 +13,20 @@ try
 	builder.AddIvyDebugLogger();
 
 	var certificateManager = new StaticCertManager(builder.Configuration.GetSection("StaticCertManager").Get<StaticCertManagerConfig>());
-	var staticIdentityStore = new StaticIdentityStore(builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>());
+	var staticIdentityStoreConfig = builder.Configuration.GetSection("StaticIdentityStore").Get<StaticIdentityStoreConfig>();
 
+	IIdentityStore identityStore;
+	if (staticIdentityStoreConfig != null)
+	{
+		identityStore = new StaticIdentityStore(staticIdentityStoreConfig);
+	}
+	else
+	{
+		identityStore = new IdentityStore();
+	}
+	
 	builder.Services.AddHttpContextAccessor();
-	builder.Services.AddSingleton<IIdentityStore>(x => staticIdentityStore);
+	builder.Services.AddSingleton<IIdentityStore>(x => identityStore);
 	builder.Services.AddSingleton<ICertificateManager>(x => certificateManager);
 	builder.Services.AddSingleton<IApplicationManager>(x => new ApplicationManager());
 	builder.Services.AddSingleton<ITokenGenerator>(x => new TokenGenerator(certificateManager));
