@@ -1,4 +1,4 @@
-﻿using IvyAuth.Interfaces;
+using IvyAuth.Interfaces;
 using Newtonsoft.Json;
 
 namespace IvyAuth
@@ -14,7 +14,6 @@ namespace IvyAuth
             TimeZone = timeZone;
             Salt = salt;
             PasswordHash = passwordHash;
-            TwoFactorMethods = new List<TwoFactorMethod>();
         }
 
         public static IvyIdentity? LoadFromDisk(string email)
@@ -42,6 +41,5 @@ namespace IvyAuth
         public string TimeZone { get; private set; }
         public string Salt { get; private set; }
         public string PasswordHash { get; private set; }
-        public IEnumerable<TwoFactorMethod> TwoFactorMethods {get; private set;}
     }
 }
