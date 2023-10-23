@@ -42,7 +42,7 @@ namespace IvyAuth
 			var token = JwtBuilder.Create()
 				.WithAlgorithm(new RS256Algorithm(cert.Certificate))
 				.AddHeader("kid", cert.Kid)
-				.AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(5).ToUnixTimeSeconds())
+				.AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(60).ToUnixTimeSeconds())
 				.AddClaim("iss", "ivytech.one")
 				.AddClaim("aud", app.Id)
 				.AddClaim("sub", identity.Id)
